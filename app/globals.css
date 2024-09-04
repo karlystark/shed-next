@@ -2,26 +2,37 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@font-face {
+  font-family: 'Wawa';
+  src: url("/TayWawa.otf")format("opentype");
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap');
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  margin: 0;
+  box-sizing: border-box;
+  color: var(--green);
+  background-color: var(--bg);
+  font-family: 'Roboto Mono', monospace;
 }
+
+:root {
+  --bg: rgb(255, 245, 224);
+  --light-bg: rgb(255, 247, 231);
+  --white:hsl(24, 100%, 99%);
+  --black:rgb(30, 30, 31);
+  --red: hsl(17, 74%, 30%);
+  --pink: hsl(359, 37%, 54%);
+  --green: hsl(97, 64%, 15%);
+  --yellow: hsl(53, 89%, 39%);
+}
+
+/* @media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+  }
+} */
+
+
+

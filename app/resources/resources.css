@@ -1,0 +1,56 @@
+.ResourceList-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.ResourceList-banner {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  overflow: hidden;
+  background-color: var(--green);
+  margin-bottom: 5rem;
+  margin-top: 30px;
+}
+
+.ResourceList-banner h1 {
+  align-self: center;
+  color: var(--bg);
+  transform: rotate(-3deg);
+  font-size: 9rem;
+  letter-spacing: 20px;
+  font-weight: 600;
+  margin: 60px;
+  text-align: center;
+}
+
+.ResourceList-banner img {
+  max-height: 30%;
+  max-width: 30%;
+}
+
+.ResourceList-banner img:first-of-type {
+  transform: rotate(-90deg);
+}
+
+.ResourceList-body {
+  display: flex;
+}
+
+
+@media (max-width: 760px) {
+
+  .ResourceList-body {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ResourceList-banner h1 {
+    font-size: 3rem;
+  }
+
+  .ResourceList-banner {
+    margin-bottom: 3rem;
+  }
+}

@@ -1,0 +1,51 @@
+nav {
+  margin: 10px;
+  margin-right: 20px;
+}
+
+.Nav-logo:hover {
+  fill: var(--red);
+}
+
+.Nav-title p {
+  font-size: 2rem;
+  margin-top: -8%;
+}
+
+.nav-link:hover {
+color:var(--pink);
+}
+
+.nav-link {
+  color: var(--black);
+  font-size: 1.1rem;
+}
+
+.Nav-title {
+  display: flex;
+  flex-direction: column;
+}
+
+.Nav-links {
+  display: flex;
+  flex-direction: column;
+}
+
+
+/************** RESPONSIVE MEDIA QUERIES *****************/
+
+@media (max-width: 768px){
+  nav div:first-of-type {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+  }
+
+  .Nav-title p{
+    font-size: 3vh;
+  }
+
+  .Nav-links {
+    align-items: center;
+  }
+}
