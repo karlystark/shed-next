@@ -1,3 +1,8 @@
+# Shed
+
+<img width="1262" alt="shed-about" src="https://github.com/user-attachments/assets/e4e8ea2a-d712-4031-a95a-9da9e47b84e0">
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
