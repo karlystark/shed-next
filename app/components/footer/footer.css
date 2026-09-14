@@ -1,0 +1,23 @@
+.Footer {
+  background-color: var(--green);
+  color: #f4f2ed;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin-top: 5rem;
+}
+
+.Footer-tagline {
+  margin: 0;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+.Footer-copyright {
+  margin: 0;
+  font-size: 0.85rem;
+  opacity: 0.8;
+}

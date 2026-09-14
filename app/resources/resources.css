@@ -1,7 +1,65 @@
-.ResourceList-list {
+.ResourceList-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.ResourceList-header {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.add-resource-btn {
+  display: inline-block;
+  background-color: var(--green);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 1.1rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  transition: background-color 0.15s ease-in;
+}
+
+.add-resource-btn:hover {
+  background-color: var(--pink);
+  color: var(--white);
+}
+
+/* .add-resource-btn is reused on a <button type="button"> for the export
+   action. Tailwind's Preflight reset ("button, [type='button'] {
+   background-color: transparent }") ties a plain class selector on
+   specificity and loads after this file, so the button variant needs a
+   higher-specificity selector to keep its background reliably. */
+button.add-resource-btn {
+  border: none;
+  appearance: none;
+  -webkit-appearance: none;
+  font-family: inherit;
+  cursor: pointer;
+  background-color: var(--green);
+  color: var(--white);
+}
+
+button.add-resource-btn:hover {
+  background-color: var(--pink);
+}
+
+button.add-resource-btn:disabled {
+  background-color: var(--light-bg);
+  color: var(--black);
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.ResourceList-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
 }
 
 .ResourceList-banner {
@@ -36,14 +94,19 @@
 
 .ResourceList-body {
   display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
 }
 
 
 @media (max-width: 760px) {
 
   .ResourceList-body {
-    display: flex;
     flex-direction: column;
+    padding: 0 1rem;
   }
 
   .ResourceList-banner h1 {

@@ -1,29 +1,21 @@
 import "./filter.css";
 import { useState } from "react";
+import { CATEGORIES } from "../../../lib/constants";
 
-function Filter({ filterResources, filterSheds, resetFilter }) {
-  const [typeIsClicked, setTypeIsClicked] = useState(null);
-  const [friendIsClicked, setFriendIsClicked] = useState(null);
+interface FilterProps {
+  filterResources: (category: string) => void;
+  filterSheds: (username: string) => void;
+  resetFilter: () => void;
+  friends: string[];
+}
 
-  console.log("isClicked", typeIsClicked);
+function Filter({ filterResources, filterSheds, resetFilter, friends }: FilterProps) {
+  const [typeIsClicked, setTypeIsClicked] = useState<number | null>(null);
+  const [friendIsClicked, setFriendIsClicked] = useState<number | null>(null);
 
-  const tags = [
-    "tools",
-    "foods",
-    "services",
-    "auto/bike",
-    "outdoors",
-    "tech",
-  ];
+  const tags = CATEGORIES;
 
-  const friends = [
-    "whitney",
-    "jen",
-    "george",
-    "bug"
-  ];
-
-  function handleTypeClick(el, idx) {
+  function handleTypeClick(el: string, idx: number) {
     if (typeIsClicked === idx) {
       // unselect the checkbox
       setTypeIsClicked(null);
@@ -37,7 +29,7 @@ function Filter({ filterResources, filterSheds, resetFilter }) {
     }
   }
 
-  function handleFriendClick(el, idx) {
+  function handleFriendClick(el: string, idx: number) {
     if (friendIsClicked === idx) {
       // unselect the checkbox
       setFriendIsClicked(null);

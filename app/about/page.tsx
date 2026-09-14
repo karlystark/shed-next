@@ -1,25 +1,7 @@
-"use client";
-
 import Image from "next/image";
-import React, { useState } from "react";
-import Toggle from "../components/toggle/toggle";
 import "./about.css";
 
-/** About renders the about page
- *
- * props: none
- * state: none
- *
- */
-
 function About() {
-    const [isOn1, setIsOn1] = useState(false);
-
-    function colorChange1() {
-        console.log("clicked!");
-        setIsOn1(!isOn1);
-    }
-
     return (
         <div className="About">
             <div className="About-hero">
@@ -46,7 +28,6 @@ function About() {
                     </p>
                 </div>
             </div>
-            <Toggle isChecked={isOn1} changeScreen={colorChange1} />
         </div>
     );
 

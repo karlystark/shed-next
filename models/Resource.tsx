@@ -1,10 +1,11 @@
 import mongoose, { Schema, model, models } from "mongoose";
+import { CATEGORIES } from "../lib/constants";
 
 const resourceSchema = new Schema({
-    name: {
+    title: {
         type: String,
-        required: [true, 'Please provide a name for this resource.'],
-        maxlength: [50, 'Name cannot be more than 50 characters.'],
+        required: [true, 'Please provide a title for this resource.'],
+        maxlength: [50, 'Title cannot be more than 50 characters.'],
     },
     quantity: {
         type: Number,
@@ -16,10 +17,16 @@ const resourceSchema = new Schema({
         required: [false],
         maxlength:[100, "Description cannot be more than 100 characters"],
     },
-    image: {
-        type: [String],
-        required: [false]
-    }
+    category: {
+        type: String,
+        required: [true, 'Please provide a category for this resource.'],
+        enum: CATEGORIES,
+    },
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+    },
 }, {
     timestamps: true,
 });

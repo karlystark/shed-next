@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* margin-top: -20px; */
   animation: fadeIn 3s forwards;
 }
 
@@ -12,7 +11,6 @@
 
 .About-title img {
   max-height: 40vh;
-  /* transform: rotate(-10deg); */
 }
 
 .About-description img {
@@ -26,12 +24,12 @@
   transform: rotate(0deg);
 }
 
-.About-hero{
+.About-hero {
   max-width: 80%;
   margin-top: 100px;
 }
 
-.About-hero h1{
+.About-hero h1 {
   align-self: center;
   font-size: 3rem;
 }
@@ -57,142 +55,61 @@ u {
   }
 }
 
-/************** RESPONSIVE MEDIA QUERIES *****************/
+/************** RESPONSIVE: below this width, the side-by-side
+   text+image rows no longer have room to breathe, so we switch
+   to a stacked layout with both images placed together as a pair. *****************/
 
-
-@media (max-width: 280px){
-  .About-hero h1 {
-    font-size: 1.2rem;
+@media (max-width: 800px) {
+  .About {
+    width: 100%;
+    padding: 0 1.25rem;
+    box-sizing: border-box;
   }
 
   .About-hero {
-    max-width: 90%;
+    max-width: 100%;
+    width: 100%;
+    margin-top: 3rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 1.5rem;
   }
 
-  .About img {
-    max-height: 20vh;
+  .About-title, .About-description {
+    display: contents;
   }
 
-  .About-description p {
-    font-size: .8rem;
-    margin-left: -50px;
-  }
-
-  .About-description {
-    margin-top: 8px;
-    display: flex;
-    flex-direction: column;
-  }
-
-
-}
-
-
-@media (min-width: 280px) and (max-width: 320px) {
   .About-hero h1 {
-    font-size: 1.2rem;
-  }
-
-  .About-hero {
-    max-width: 90%;
-  }
-
-  .About-title{
-    display: flex;
-    flex-direction: column;
-  }
-
-  .About img {
-    max-height: 20vh;
-  }
-
-  .About-description p {
-    font-size: .8rem;
-    float: center;
-    text-align: left;
-
-  }
-
-  .About-description {
-    margin-top: 8px;
-    display: flex;
-    flex-direction: column;
-    max-width: 80%;
-  }
-}
-
-
-@media (min-width: 320px) and (max-width: 480px) {
-  .About-hero h1 {
-    font-size: 1.3rem;
-  }
-
-  .About img {
-    max-height: 20vh;
-  }
-
-  .About-hero {
-    max-width: 90%;
-  }
-
-  .About-description p {
-    font-size: .8rem;
-    max-width: 70%;
-    margin-top: 10px;
-    margin-left: -50px;
-  }
-
-  .About-description {
-    margin-top: 10px;
-  }
-
-}
-
-
-@media (min-width: 480px) and (max-width: 760px) {
-  .About-hero h1 {
-    font-size: 2rem;
-  }
-
-  .About img {
-    max-height: 35vh;
-  }
-
-  .About-hero {
-    max-width: 80%;
-  }
-
-  .About-description p {
-    font-size: 1rem;
-  }
-
-  .About-description {
-    margin-top: 8px;
+    grid-column: 1 / -1;
     text-align: center;
-  }
-}
-
-@media (min-width: 760px) and (max-width: 1024px) {
-  .About-hero h1 {
-    font-size: 2.5rem;
+    font-size: clamp(1.4rem, 1rem + 3vw, 2.25rem);
   }
 
-  .About img {
-    max-height: 40vh;
+  .About-title img {
+    grid-column: 1;
+    grid-row: 2;
+    justify-self: end;
+    width: 100%;
+    max-width: 160px;
+    max-height: none;
+    height: auto;
   }
 
-  .About-hero {
-    max-width: 85%;
+  .About-description img {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: start;
+    width: 100%;
+    max-width: 160px;
+    max-height: none;
+    height: auto;
+    margin-right: 0;
   }
 
   .About-description p {
-    font-size: 1.4rem;
-    margin-top: 30px;
-    margin-left: -50px;
-  }
-
-  .About-description {
-    margin-top: -40px;
+    grid-column: 1 / -1;
     text-align: center;
+    font-size: clamp(1rem, 0.85rem + 1vw, 1.4rem);
   }
 }

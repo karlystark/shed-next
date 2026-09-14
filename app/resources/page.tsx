@@ -1,125 +1,148 @@
 "use client";
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useSession } from 'next-auth/react';
 import ResourceCard from "../components/resourceCard/resourceCard";
 import Filter from "../components/filter/filter";
 import "./resources.css";
-import { useState } from "react";
 
-const resources = [
-  {
-    id: 1,
-    user: "karlystark",
-    user_img: "ksnpr.JPG",
-    title: "hand saw",
-    description: "7 inch corona foldable hand saw with a safety latch.",
-    image: "corona.jpg",
-    alt: "a foldable handsaw against a white background",
-    category: "tools",
-    quantity: 1
-  },
-  {
-    id: 2,
-    user: "karlystark",
-    user_img: "ksnpr.JPG",
-    title: "focusrite scarlett 2i2 interface",
-    description: "a music production interface with two XLR inputs. ",
-    image: "scarlett.jpeg",
-    alt: "a scarlett interface",
-    category: "tech",
-    quantity: 1
-  },
-  {
-    id: 3,
-    user: "karlystark",
-    user_img: "ksnpr.jpg",
-    title: "spice cake slices",
-    description: "I made a cake! Please eat some! It's spice cake with mascarpone whipped cream frosting and raspberry jam.",
-    image: "cake.jpeg",
-    alt: "a slice of spice cake on a plate",
-    category: "foods",
-    quantity: 3
-  },
-  {
-    id: 4,
-    user: "karlystark",
-    user_img: "ksnpr.jpg",
-    title: "pet care",
-    description: "I can feed your cat or hang with your dog any time you're away! My job is basically cats!",
-    image: "darla.jpeg",
-    alt: "darla licks karly's face as they sit on a porch",
-    category: "services",
-    quantity: 1
-  },
-  {
-    id: 5,
-    user: "karlystark",
-    user_img: "ksnpr.jpg",
-    title: "REI Passage 2 tent",
-    description: "A two-person REI Passage 2 tent. It works well for two but is really roomy and great for one.",
-    image: "passage2.jpeg",
-    alt: "a passage 2 tent sits in a field",
-    category: "outdoors",
-    quantity: 1
-  },
-  {
-    id: 6,
-    user: "karlystark",
-    user_img: "ksnpr.jpg",
-    title: "wooden spoons",
-    description: "I whittle so many of these, have some!",
-    image: "spoons.jpeg",
-    alt: "a collection of hand carved wooden spoons on a table",
-    category: "tools",
-    quantity: 10
-  },
+interface Resource {
+  _id: string;
+  title: string;
+  description?: string;
+  quantity: number;
+  category: string;
+  owner: { username: string };
+}
 
-];
+interface Friend {
+  _id: string;
+  username: string;
+}
 
 function Resources() {
-  const [filteredResources, setFilteredResources] = useState(resources);
+  const { data: session, status } = useSession();
+  const [resources, setResources] = useState<Resource[]>([]);
+  const [filteredResources, setFilteredResources] = useState<Resource[]>([]);
+  const [friends, setFriends] = useState<Friend[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [unauthorized, setUnauthorized] = useState(false);
 
-  console.log("filteredResources=", filteredResources);
+  useEffect(() => {
+    if (status === 'loading') return;
 
-  function filterSheds(username) {
-    if(username === null){
-      resetFilter();
-    } else {
-    const filteredSheds = resources.filter(resource => resource.user === username);
-    setFilteredResources(filteredSheds);
+    if (status === 'unauthenticated') {
+      setLoading(false);
+      setUnauthorized(true);
+      return;
     }
+
+    async function loadResources() {
+      const [resourcesRes, friendsRes] = await Promise.all([
+        fetch('/api/resources'),
+        fetch('/api/friends'),
+      ]);
+
+      if (resourcesRes.status === 401) {
+        setUnauthorized(true);
+        setLoading(false);
+        return;
+      }
+
+      const resourcesData = await resourcesRes.json();
+      const friendsData = await friendsRes.json();
+      setResources(resourcesData);
+      setFilteredResources(resourcesData);
+      setFriends(friendsData);
+      setLoading(false);
+    }
+    loadResources();
+  }, [status]);
+
+  function filterSheds(username: string) {
+    const filtered = resources.filter((resource) => resource.owner.username === username);
+    setFilteredResources(filtered);
   }
 
-  function filterResources(type) {
-    if(type === null){
-      resetFilter();
-    } else {
-    const filteredItems = resources.filter(resource => resource.category === type);
-    setFilteredResources(filteredItems);
-    }
+  function filterResources(category: string) {
+    const filtered = resources.filter((resource) => resource.category === category);
+    setFilteredResources(filtered);
   }
 
   function resetFilter() {
     setFilteredResources(resources);
   }
 
+  function handleDelete(id: string) {
+    fetch(`/api/resources/${id}`, { method: 'DELETE' }).then(() => {
+      const updated = resources.filter((resource) => resource._id !== id);
+      setResources(updated);
+      setFilteredResources((prev) => prev.filter((resource) => resource._id !== id));
+    });
+  }
+
+  function handleExport() {
+    const today = new Date().toLocaleDateString();
+    const lines = filteredResources.map((resource) => {
+      const description = resource.description ? ` — ${resource.description}` : '';
+      return `${resource.title} (qty ${resource.quantity}, ${resource.category})${description} — ${resource.owner.username}'s shed`;
+    });
+    const content = `Shed resource list\nExported ${today}\n\n${lines.join('\n')}\n`;
+
+    const blob = new Blob([content], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `shed-resources-${new Date().toISOString().slice(0, 10)}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
+
   return (
     <div className="ResourceList">
       <div className="ResourceList-banner">
-        {/* <img src="sun.png" alt="" /> */}
         <h1 className="ResourceList-banner-title"> shared resources </h1>
-        {/* <img src="carrots.png" alt="" /> */}
       </div>
       <div className="ResourceList-body">
-        <Filter
-          filterResources={filterResources}
-          filterSheds={filterSheds}
-          resetFilter={resetFilter}
-        />
-        <div className="ResourceList-list">
-          {filteredResources.map((resource, idx) =>
-            <ResourceCard key={idx} resource={resource} />)}
-        </div>
+        {unauthorized ? (
+          <p>log in to see your network&apos;s resources.</p>
+        ) : (
+          <>
+            <Filter
+              filterResources={filterResources}
+              filterSheds={filterSheds}
+              resetFilter={resetFilter}
+              friends={friends.map((friend) => friend.username)}
+            />
+            <div className="ResourceList-content">
+              <div className="ResourceList-header">
+                <Link href="/resources/new" className="add-resource-btn">+ add a resource</Link>
+                <button
+                  type="button"
+                  onClick={handleExport}
+                  disabled={filteredResources.length === 0}
+                  className="add-resource-btn"
+                >
+                  export list
+                </button>
+              </div>
+              <div className="ResourceList-list">
+                {loading && <p>loading resources...</p>}
+                {!loading && filteredResources.length === 0 && <p>no resources yet. add friends to see their shared resources.</p>}
+                {filteredResources.map((resource) =>
+                  <ResourceCard
+                    key={resource._id}
+                    resource={resource}
+                    isOwner={session?.user.username === resource.owner.username}
+                    onDelete={handleDelete}
+                  />)}
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

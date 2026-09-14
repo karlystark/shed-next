@@ -1,6 +1,5 @@
 nav {
-  margin: 10px;
-  margin-right: 20px;
+  margin: 6px 12px;
 }
 
 .Nav-logo:hover {
@@ -9,16 +8,29 @@ nav {
 
 .Nav-title p {
   font-size: 2rem;
-  margin-top: -8%;
 }
 
 .nav-link:hover {
-color:var(--pink);
+  color: var(--account-color, var(--pink));
 }
 
 .nav-link {
   color: var(--black);
   font-size: 1.1rem;
+}
+
+.nav-link-active {
+  border-bottom: 2px solid var(--pink);
+  padding-bottom: 2px;
+}
+
+button.nav-link {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  cursor: pointer;
+  text-align: left;
 }
 
 .Nav-title {
@@ -31,21 +43,182 @@ color:var(--pink);
   flex-direction: column;
 }
 
+.Nav-links-primary,
+.Nav-links-account {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ---------- Account menu (avatar + dropdown) ----------
+   Same treatment at every breakpoint: a colored pill trigger (the
+   account's own chosen color, or pink when signed out) that discloses a
+   matching colored card of links with light text. Desktop floats that
+   card; mobile just lets it sit inline in the normal vertical flow. */
+
+.Account-menu {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Account-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: none;
+  appearance: none;
+  -webkit-appearance: none;
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.3rem 0.9rem 0.3rem 0.3rem;
+  border-radius: 999px;
+  min-height: 44px;
+}
+
+/* Specificity note: Tailwind's Preflight reset includes
+   "button, [type='button'], [type='reset'], [type='submit'] {
+   background-color: transparent }". [type='button'] ties a plain class
+   selector on specificity, and it's injected after this file, so a bare
+   .Account-trigger rule for background-color loses that tie. Scoping
+   through the real ancestor (.Account-menu) bumps specificity just
+   enough to win regardless of build order. */
+.Account-menu .Account-trigger {
+  background-color: var(--account-color);
+  color: #f4f2ed;
+}
+
+.Account-trigger:hover {
+  filter: brightness(1.1);
+}
+
+.Account-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.Account-avatar-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: var(--white);
+  background-size: cover;
+  background-position: center;
+}
+
+.Account-caret {
+  color: #f4f2ed;
+  font-size: 0.65rem;
+}
+
+.Account-dropdown {
+  display: none;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.15rem;
+  margin-top: 0.5rem;
+  min-width: 200px;
+  background-color: var(--account-color);
+  border-radius: 15px;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+  padding: 0.5rem;
+}
+
+.Account-dropdown.open {
+  display: flex;
+}
+
+.Account-dropdown a,
+.Account-dropdown button {
+  padding: 0.55rem 0.75rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  text-align: left;
+  color: #f4f2ed;
+  background: none;
+  border: none;
+  appearance: none;
+  -webkit-appearance: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.Account-dropdown a:hover,
+.Account-dropdown button:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: var(--white);
+}
+
+.Account-dropdown hr {
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  margin: 0.3rem 0.2rem;
+}
+
 
 /************** RESPONSIVE MEDIA QUERIES *****************/
 
-@media (max-width: 768px){
-  nav div:first-of-type {
-    display: flex;
+@media (max-width: 768px) {
+  nav > div {
     flex-direction: column;
-    margin: 10px;
+    align-items: center;
+    gap: 0.5rem;
   }
 
-  .Nav-title p{
+  .Nav-title p {
     font-size: 3vh;
   }
 
   .Nav-links {
     align-items: center;
   }
+}
+
+@media (min-width: 769px) {
+  .Nav-links {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .Nav-links-primary {
+    flex-direction: row;
+    align-items: center;
+    gap: 1.75rem;
+  }
+
+  .Nav-links-account {
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+    margin-left: 1.75rem;
+    padding-left: 1.75rem;
+    border-left: 2px solid var(--green);
+  }
+
+  .Account-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    margin-top: 0;
+    z-index: 30;
+  }
+}
+
+.nav-link:focus-visible,
+.Account-trigger:focus-visible,
+.Account-dropdown a:focus-visible,
+.Account-dropdown button:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 2px;
 }
