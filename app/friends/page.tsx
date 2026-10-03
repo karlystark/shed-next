@@ -133,7 +133,7 @@ export default function FriendsPage() {
             <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-2">Add a friend by username</label>
             <input id="username" value={newFriendUsername} onChange={(e) => setNewFriendUsername(e.target.value)} type="text" required className="appearance-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-yellow-800 focus:border-yellow-800 sm:text-sm" placeholder="username" />
           </div>
-          <button type="submit" className="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-950 hover:bg-yellow-800">
+          <button type="submit" className="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[var(--green)] hover:bg-[var(--pink)]">
             Send request
           </button>
         </form>

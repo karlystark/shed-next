@@ -170,7 +170,7 @@ export default function AccountPage() {
           <button
             type="submit"
             disabled={savingProfile}
-            className="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-950 hover:bg-yellow-800 disabled:opacity-50"
+            className="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[var(--green)] hover:bg-[var(--pink)] disabled:opacity-50"
           >
             {savingProfile ? 'Saving...' : 'Save profile'}
           </button>
@@ -219,7 +219,7 @@ export default function AccountPage() {
           <button
             type="submit"
             disabled={savingPassword}
-            className="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-emerald-950 hover:bg-yellow-800 disabled:opacity-50"
+            className="py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-[var(--green)] hover:bg-[var(--pink)] disabled:opacity-50"
           >
             {savingPassword ? 'Saving...' : 'Update password'}
           </button>
