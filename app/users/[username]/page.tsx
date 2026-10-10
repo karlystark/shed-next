@@ -129,7 +129,7 @@ export default function ShedPage() {
   return (
     <div className="ResourceList">
       <div className="ResourceList-banner">
-        <h1 className="ResourceList-banner-title">{username}&apos;s shed</h1>
+        <h1 className="ResourceList-banner-title ResourceList-banner-title--shed">{username}&apos;s shed</h1>
       </div>
       <div className="ResourceList-body">
         <div className="ResourceList-content">

@@ -81,6 +81,15 @@ button.add-resource-btn:disabled {
   font-weight: 600;
   margin: 60px;
   text-align: center;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+/* user shed titles vary in length, so scale with the viewport instead of a fixed size */
+.ResourceList-banner .ResourceList-banner-title--shed {
+  font-size: clamp(2rem, 7vw, 9rem);
+  letter-spacing: clamp(2px, 1vw, 20px);
+  margin: clamp(30px, 4vw, 60px);
 }
 
 .ResourceList-banner img {

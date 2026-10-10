@@ -47,12 +47,12 @@
 
 .friend-row-1 a,
 .friend-row-1 button {
-  color: var(--green);
+  color: var(--bg);
 }
 
 .friend-row-1 a:hover,
 .friend-row-1 button:hover {
-  color: var(--black);
+  color: var(--yellow);
 }
 
 .friend-row-2 {
