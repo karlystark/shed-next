@@ -18,9 +18,9 @@ body {
 }
 
 :root {
-  --bg: rgb(255, 245, 224);
-  --light-bg: rgb(255, 247, 231);
-  --white:hsl(24, 100%, 99%);
+  --bg: #f6f1f1;
+  --light-bg: #f6f1f1;
+  --white:#f6f1f1;
   --black:rgb(30, 30, 31);
   --red: hsl(17, 74%, 30%);
   --pink: hsl(359, 37%, 54%);
